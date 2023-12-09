@@ -47,7 +47,7 @@ namespace final_project
 
 
             #region fake questionaire
-            
+         /*   
 
             int user_input_fake_questions = 5;
             int multiple_choice_fake_questions = 8;
@@ -83,13 +83,13 @@ namespace final_project
 
             file_line_number = 0; //resets file_line_number for future files
             fake_questions.Close(); //close file because it's what you're supposed to do. 
-            
+            */
             #endregion fake questionaire
 
 
             #region shift to true game
             
-
+            /*
             var shifting_game = new StreamReader("shift_true_game.txt");
 
             Console.WriteLine("\n\n");
@@ -100,7 +100,7 @@ namespace final_project
                 Thread.Sleep(2500);
                 Console.WriteLine(shifting_game.ReadLine());
             }
-
+            */
             #endregion shift to true game
 
 
@@ -242,14 +242,28 @@ namespace final_project
 
             Console.ForegroundColor = ConsoleColor.Green;
 
+            var shifting_chatper_1 = new StreamReader("shift_to_chapter_1.txt");
 
+            Console.ForegroundColor = ConsoleColor.Green;
 
+            while (!shifting_chatper_1.EndOfStream)
+            {
+                Console.WriteLine(shifting_chatper_1.ReadLine());
+                Thread.Sleep(2500);
+            }
+            shifting_chatper_1.Close();
 
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Thread.Sleep(4934);
 
             #endregion shift_to_chapter1
 
             #region Chapter 1
 
+            Console.WriteLine("You step out of main gates and they slam shut behind you. You are now in a new land");
+            Console.WriteLine("You see 3 paths in front of you, A thick and heavily forested area to your left, a mountain terrain to your right. And finally a flat plane straight ahead");
+            Console.WriteLine("Oddly, despite never leaving the city before")
 
 
             #endregion Chpater 1
