@@ -31,7 +31,7 @@ namespace final_project.npc_folder
             {
                 case "Weak Sword":
 
-                    damage = random.Next(1, 2);
+                    damage = random.Next(1, 3);
                     break;
 
                 case "Sword":
@@ -57,7 +57,7 @@ namespace final_project.npc_folder
 
                 case "Slingshot":
 
-                    damage = random.Next(1, 2);
+                    damage = random.Next(1, 3);
                     break;
 
                 default:

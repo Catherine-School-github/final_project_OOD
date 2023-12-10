@@ -8,6 +8,8 @@ using System.Xml;
 using System.Threading; //sleep
 using final_project.item_folder;
 using final_project.npc_folder;
+using System.Data.SqlTypes;
+using System.Net.Security;
 
 namespace final_project
 {
@@ -202,17 +204,17 @@ namespace final_project
 
             #region setting initial items
 
-            var rusted_sword = new weapon(possible_melee_weapons[0], possible_armor_description[0]);
-            rusted_sword.damage = random.Next(4, 7);
-            rusted_sword.isRange = false;
-            rusted_sword.crit_chance = 0;
-            rusted_sword.crit_amount = 0;
+            var player_weapon = new weapon(possible_melee_weapons[0], possible_armor_description[0]);
+            player_weapon.damage = random.Next(4, 7);
+            player_weapon.isRange = false;
+            player_weapon.crit_chance = 0;
+            player_weapon.crit_amount = 0;
 
-            var old_leather_armor = new armor(possible_armor[0], possible_armor_description[0]);
-            old_leather_armor.defence_amount = random.Next(2, 4);
-            old_leather_armor.isHeavy = false;
-            old_leather_armor.crit_defence_chance = .1f;
-            old_leather_armor.crit_defence_amount = random.Next(4, 6);
+            var player_armor = new armor(possible_armor[0], possible_armor_description[0]);
+            player_armor.defence_amount = random.Next(2, 4);
+            player_armor.isHeavy = false;
+            player_armor.crit_defence_chance = 1;
+            player_armor.crit_defence_amount = random.Next(4, 6);
 
 
             #endregion setting initial items
@@ -229,14 +231,14 @@ namespace final_project
             Console.WriteLine("\nTo help you on your journey you are given 2 items. A rusted sword and Old Leather Armor");
 
             Console.WriteLine("Your sword's stats: ");
-            Console.WriteLine("\tDamage: {0}", rusted_sword.damage);
-            Console.WriteLine("\tCrit Chance: {0}", rusted_sword.crit_chance);
-            Console.WriteLine("\tCrit Amount: {0}", rusted_sword.crit_amount);
+            Console.WriteLine("\tDamage: {0}", player_weapon.damage);
+            Console.WriteLine("\tCrit Chance: {0}", player_weapon.crit_chance);
+            Console.WriteLine("\tCrit Amount: {0}", player_weapon.crit_amount);
 
             Console.WriteLine("\nYour Armor's Stats: ");
-            Console.WriteLine("\tDefence Amount: {0}", old_leather_armor.defence_amount);
-            Console.WriteLine("\tCritical Block Chance: {0}", old_leather_armor.crit_defence_chance);
-            Console.WriteLine("\tCritical Defence Amount: {0}", old_leather_armor.crit_defence_amount);
+            Console.WriteLine("\tDefence Amount: {0}", player_armor.defence_amount);
+            Console.WriteLine("\tCritical Block Chance: {0}", player_armor.crit_defence_chance);
+            Console.WriteLine("\tCritical Defence Amount: {0}", player_armor.crit_defence_amount);
 
             Console.WriteLine("\n\nThe start of your new adventure begins... Goodluck {0}", player.player_name);
 
@@ -244,7 +246,7 @@ namespace final_project
 
 
             #region shift_to_chapter_1
-
+            /*
             Console.ForegroundColor = ConsoleColor.Green;
 
             var shifting_chatper_1 = new StreamReader("shift_to_chapter_1.txt");
@@ -261,7 +263,7 @@ namespace final_project
             Console.ForegroundColor = ConsoleColor.White;
 
             Thread.Sleep(4934);
-
+            */
             #endregion shift_to_chapter1
 
             #region Chapter 1
@@ -292,11 +294,155 @@ namespace final_project
                 case "a":
                     var skeleton_forest = new enemy("Skeleton", enemy_sword_types[0] , 10);
                     var slime_forest = new enemy("Slime", "Melee", 8);
-                    var monkey = new enemy("Money", "Melee", 2);
+                    var monkey = new enemy("Monkey", "Melee", 2);
+                    var forest_boss = new enemy("Gate Guardian", enemy_sword_types[1], 15);
+
+                    bool ran_away = false; //used to tell if player ran away form a fight
 
                     Console.WriteLine("\n\n\nYou start your adventure towards the densely packed forest to your left.");
                     Console.WriteLine("As you get closer and closer the sound of the mysterious voice gets louder and harder to ignore, along with your sense of dread");
-                   
+                    Console.WriteLine("You start to make your way into the forest until you see something ontop of the trees");
+                    Console.WriteLine("As you try and get a better look, the mysterious figure falls from the trees, a monkey");
+                    Console.WriteLine("You try and walk around it, but it swpies at you, you have a feeling it won't go without a fight\n\n\n");
+
+                    while (monkey.enemy_health > 0)
+                    {
+                        int enemy_choice, temp_damage, player_defence_chance, enemy_temp_defense;
+                        Console.WriteLine("The Monkey's current health is: " + monkey.enemy_health);
+
+                        enemy_choice = random.Next(1, 4);
+                        
+                        if (enemy_choice == 1)
+                        {
+                            Console.WriteLine("The looks at you with a confused, yet angry look on it's face");
+                        }
+
+                        if (enemy_choice == 2)
+                        {
+                            temp_damage = monkey.Attack();
+
+                            player_defence_chance = random.Next(1, 26);
+
+
+
+                            if (player.player_defense >= player_defence_chance)
+                            {
+                                temp_damage -= 2;
+
+                                if (temp_damage < 0)
+                                {
+                                    temp_damage = 0;
+                                }
+                            }
+
+                            Console.WriteLine("The " + monkey.enemy_name + " hits you for " + temp_damage);
+                            player.player_health -= temp_damage;
+
+                            if (player.player_health <= 0)
+                            {
+                                lose_forest();
+                            }
+
+                        }
+
+                        if (enemy_choice == 3)
+                        {
+                            Console.WriteLine("The " + monkey.enemy_name + " appears to prepare itself for your next attack");
+
+                            enemy_temp_defense = 1;
+                        }
+
+
+                        Console.WriteLine("\n\nIt is now your turn " +  player.player_name + ", You have 3 options");
+                        Console.WriteLine("A: Attack the " + monkey.enemy_name +  " using your sword");
+                        Console.WriteLine("B: Look closer at the "+ monkey.enemy_name + " in order to better understand your opponent");
+                        Console.WriteLine("C: Run. This isn't your fight");
+                        Console.WriteLine("You have " + player.player_health + " health remaining");
+
+                        var player_choice = Console.ReadLine().ToLower();
+
+                        while (player_choice != "a" && player_choice != "b" && player_choice != "c")
+                        {
+                            Console.WriteLine("You have entered an invalid option");
+                            Console.WriteLine("You can either A: Attack, B: look closer at the enemy, C: Run");
+
+                            player_choice = Console.ReadLine().ToLower();
+                        }
+
+                        switch (player_choice)
+                        {
+                            case "a":
+
+                                Console.WriteLine("You attack " + monkey.enemy_name);
+                                monkey.enemy_health -= player_weapon.damage;
+
+                                break;
+
+                            case "b":
+
+                                Console.WriteLine("\n\nYou look closer at the " + monkey.enemy_name + " to see if you notice anythin");
+                                Console.WriteLine("You notice the monkey doesn't have any weapons, armor, or forms of defence and attack other then it's paws");
+                                Console.WriteLine("The expression of the monkey looks like it is confused but scared, not angry at you or wanting to stop you");
+                                Console.WriteLine("You notice nothing else of note\n");
+                                break;
+
+                            case "c":
+
+                                Console.WriteLine("You run away from the monkey, it doesn't run after you");
+                                ran_away = true;
+
+                                monkey.enemy_health = 0; //sets health to 0 to break out of the while loop
+                                break;
+                        }
+
+                    }
+
+                    if (!ran_away)
+                    {
+                        Console.WriteLine("Congrats! You have defeated the evil monkey, sure it seemed like a harmless animal but it got in your way and you had orders to kill anything that did that");
+                        int exp_gained = random.Next(0, 25);
+                        Console.WriteLine("You have gained ", exp_gained);
+                        
+                        player.exp += exp_gained;
+
+                        if (player.exp >= player.next_level_exp_target)
+                        {
+                            player.exp = 0;
+                            player.next_level_exp_target += 25;
+                            player.level = 0;
+                        }
+                        else
+                        {
+                            Console.WriteLine("You have spared the monster.. Hopefully this wasn't a mistake");
+                        }
+                    }
+
+
+                    Console.WriteLine("While you contiue thorugh the forest you see something shining, a mysterious green potion in a glass bottle laying on the ground next to a skeleton");
+                    Console.WriteLine("You get the strange feeling that this potion could help you on your adventure if you drank it, as you open the bottle however a stench of death hits you");
+                    Console.WriteLine("Do you drink the potion " + player.player_name + " y/n");
+                    var drink_forest_potion_one = Console.ReadLine().ToLower();
+                    
+                    if (drink_forest_potion_one == "y")
+                    {
+                        Console.WriteLine("Despite the stench, you decide to drink the potion. It goes down your through and start to feel a tiny bit better then before");
+                        Console.WriteLine("Your health has increased by one point");
+                        player.player_health++;
+                    }
+                    else
+                    {
+                        Console.WriteLine("The stench of death was to much to handle as you set down the drink not wanting to end up like the skeleton it was next to");
+                    }
+
+                    Console.WriteLine("A few steps after you set the bottle down, you hear the sound of bones rattling behind you.");
+                    Console.WriteLine("You turn around and see the skeleton that was once on the ground now standing with a sword in it's hand. It starts to run at you");
+
+                    while (skeleton_forest.enemy_health > 0)
+                    {
+
+
+                    }
+
                     break;
 
 
@@ -326,6 +472,26 @@ namespace final_project
 
             Console.ReadLine();
             
+        }
+
+        private static void lose_forest()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            var forest_lost = new StreamReader("forest_lost.txt");
+
+            while (!forest_lost.EndOfStream)
+            {
+                Console.WriteLine(forest_lost.ReadLine());
+                Thread.Sleep(1000);
+            }
+
+            forest_lost.Close();
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Environment.Exit(0); //gotten from chatGPT
+
         }
     }
 }

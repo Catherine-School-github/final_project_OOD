@@ -13,11 +13,17 @@ namespace final_project
         public string player_name;
         string color;
 
+        public int exp;
+        public int level;
+        public int next_level_exp_target;
         #endregion vars
 
         public player(string name)
         {
             player_name = name;
+            exp = 0;
+            level = 1;
+            next_level_exp_target = 50;
         }
 
 
