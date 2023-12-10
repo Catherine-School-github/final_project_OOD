@@ -7,6 +7,7 @@ using System.IO; //read file. probably need??
 using System.Xml;
 using System.Threading; //sleep
 using final_project.item_folder;
+using final_project.npc_folder;
 
 namespace final_project
 {
@@ -29,6 +30,9 @@ namespace final_project
             string[] possible_armor_description = { "Worn out leather armor. It has defened it's wearer through many battles", "Heavy armor that offers the most protectoin", "stab resistant armor but weighs it's wearer down", "Light armor made to protect elven diplomats from attackers" };
 
             string[] equipment_array = new string[8];   //creates an array with 8 slots. Why does C# do this so weirdly. 
+
+            string[] enemy_sword_types = { "Weak Sword", "Sword", "Strong Sword" };
+            string[] enemy_range_types = { "Bow", "Crossbow", "Slingshot" };
 
             #region player_name get
             Console.Write("WELCOME! Please enter your name player: ");
@@ -107,7 +111,7 @@ namespace final_project
             #region setting up character
             string player_class_get;
 
-            
+            /*
             Thread.Sleep(5000);
             Console.Clear();
 
@@ -120,8 +124,9 @@ namespace final_project
             Console.WriteLine("Just gotta do one more thing");
             Thread.Sleep(2500);
             Console.WriteLine("Ah there we go. Now everything is ready\n\n");
+            */
             Console.ForegroundColor = ConsoleColor.White;
-
+            
 
             Console.WriteLine("Choose your class: ");
             Console.WriteLine("A: Fighter");
@@ -263,8 +268,50 @@ namespace final_project
 
             Console.WriteLine("You step out of main gates and they slam shut behind you. You are now in a new land");
             Console.WriteLine("You see 3 paths in front of you, A thick and heavily forested area to your left, a mountain terrain to your right. And finally a flat plane straight ahead");
-            Console.WriteLine("Oddly, despite never leaving the city before")
+            Console.WriteLine("Just as you were about to make a decision you hear the gates creak open behind you, and out runs a messanger");
+            Console.WriteLine("\"Before you leave, know that the paths ahead are not what they seem. What may be truth one day might be a lie the next\"");
+            Console.WriteLine("It is now your choice", player.player_name, " where do you want to go");
+            Console.WriteLine("A: The Forest\n\tYou can't see far into it. All you see are densly packed together trees, and you swear you hear a person sining an enchanting song");
+            Console.WriteLine("B: The flat plane\n\tYou can see miles ahead and notice nothing of note");
+            Console.WriteLine("C: The mountains\n\tThe path leading to the mountains are winding and will surely take longer then the other two paths, but you heard rumors of a treasure");
 
+            string path_choice_1 = Console.ReadLine().ToLower();
+
+            while (path_choice_1 != "a" && path_choice_1 != "b" && path_choice_1 != "c")
+            {
+                Console.WriteLine("That isn't a possible path. Your options are the following: ");
+                Console.WriteLine("A: The densly packed forest");
+                Console.WriteLine("B: The flat planes ahead of you");
+                Console.WriteLine("C: The mountains to your right");
+
+                path_choice_1 = Console.ReadLine().ToLower();
+            }
+
+            switch (path_choice_1)
+            {
+                case "a":
+                    var skeleton_forest = new enemy("Skeleton", enemy_sword_types[0] , 10);
+                    var slime_forest = new enemy("Slime", "Melee", 8);
+                    var monkey = new enemy("Money", "Melee", 2);
+
+                    Console.WriteLine("\n\n\nYou start your adventure towards the densely packed forest to your left.");
+                    Console.WriteLine("As you get closer and closer the sound of the mysterious voice gets louder and harder to ignore, along with your sense of dread");
+                   
+                    break;
+
+
+                case "b":
+                    Console.WriteLine("\n\n\nYou start on the path ahead of you, as you make your way across the flat ground in front of you, a questions of what you are missing pops in your mind");
+                    Console.WriteLine("Though you have to deliver the package as soon as possible, you can't seem to shake the feeling that you are missing..... something");
+
+                    break;
+
+                case "c":
+                    Console.WriteLine("\n\n\nThe idea of tresure fills your mind as you make your qay to the mountains");
+                    Console.WriteLine("You start wondering if it'll be a sword, a hoarde of gold, or a one of a item item");
+
+                    break;
+            }
 
             #endregion Chpater 1
 

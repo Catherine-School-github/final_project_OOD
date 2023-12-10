@@ -47,6 +47,7 @@
     <Compile Include="item_folder\equipment.cs" />
     <Compile Include="item_folder\item.cs" />
     <Compile Include="item_folder\weapon.cs" />
+    <Compile Include="npc_folder\enemy.cs" />
     <Compile Include="player_folder\player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,7 +59,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="npc_folder\" />
     <Folder Include="world_folder\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
