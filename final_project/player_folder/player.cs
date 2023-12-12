@@ -11,7 +11,7 @@ namespace final_project
     {
         #region vars
         public string player_name;
-        string color;
+        public string color;
 
         public int exp;
         public int level;

@@ -36,7 +36,7 @@ namespace final_project.npc_folder
 
                 case "Sword":
 
-                    damage = random.Next(1, 4);
+                    damage = random.Next(2, 4);
                     break;
 
                 case "Strong Sword":
