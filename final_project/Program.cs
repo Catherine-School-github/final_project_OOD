@@ -10,6 +10,7 @@ using final_project.item_folder;
 using final_project.npc_folder;
 using System.Data.SqlTypes;
 using System.Net.Security;
+using System.Security;
 
 namespace final_project
 {
@@ -388,7 +389,7 @@ namespace final_project
 
                             case "c":
 
-                                Console.WriteLine("You run away from the monkey, it doesn't run after you");
+                                Console.WriteLine("You run away from the monkey, it doesn't run after you, let's hope this wasn't a mistake");
                                 ran_away = true;
 
                                 monkey.enemy_health = 0; //sets health to 0 to break out of the while loop
@@ -425,13 +426,13 @@ namespace final_project
                     
                     if (drink_forest_potion_one == "y")
                     {
-                        Console.WriteLine("Despite the stench, you decide to drink the potion. It goes down your through and start to feel a tiny bit better then before");
+                        Console.WriteLine("\n\nDespite the stench, you decide to drink the potion. It goes down your through and start to feel a tiny bit better then before");
                         Console.WriteLine("Your health has increased by one point");
                         player.player_health++;
                     }
                     else
                     {
-                        Console.WriteLine("The stench of death was to much to handle as you set down the drink not wanting to end up like the skeleton it was next to");
+                        Console.WriteLine("\n\nThe stench of death was to much to handle as you set down the drink not wanting to end up like the skeleton it was next to");
                     }
 
                     Console.WriteLine("A few steps after you set the bottle down, you hear the sound of bones rattling behind you.");
@@ -439,10 +440,141 @@ namespace final_project
 
                     while (skeleton_forest.enemy_health > 0)
                     {
+                        int enemy_choice, temp_damage, player_defence_chance, enemy_temp_defense;
+                        enemy_temp_defense = 0;
 
+                        Console.WriteLine("The Skeleton's current health is: " + skeleton_forest.enemy_health);
+
+                        enemy_choice = random.Next(1, 4);
+
+                        if (enemy_choice == 1)
+                        {
+                            Console.WriteLine("The skeleton slashes it's sword in the air in an attempt to intimidate you");
+                        }
+
+                        if (enemy_choice == 2)
+                        {
+                            temp_damage = skeleton_forest.Attack();
+
+                            player_defence_chance = random.Next(1, 26);
+
+
+
+                            if (player.player_defense >= player_defence_chance)
+                            {
+                                temp_damage -= 2;
+
+                                if (temp_damage < 0)
+                                {
+                                    temp_damage = 0;
+                                }
+                            }
+
+                            Console.WriteLine("The " + skeleton_forest.enemy_name + " hits you for " + temp_damage);
+                            player.player_health -= temp_damage;
+
+                            if (player.player_health <= 0)
+                            {
+                                lose_forest();
+                            }
+
+                        }
+
+                        if (enemy_choice == 3)
+                        {
+                            Console.WriteLine("The " + skeleton_forest.enemy_name + " appears to prepares itself for your next attack");
+
+                            enemy_temp_defense = 2;
+                        }
+
+
+                        Console.WriteLine("\n\nIt is now your turn " + player.player_name + ", You have 3 options");
+                        Console.WriteLine("A: Attack the " + skeleton_forest.enemy_name + " using your sword");
+                        Console.WriteLine("B: Look closer at the " + skeleton_forest.enemy_name + " in order to better understand your opponent");
+                        Console.WriteLine("C: Run. This isn't your fight");
+                        Console.WriteLine("You have " + player.player_health + " health remaining");
+
+                        var player_choice = Console.ReadLine().ToLower();
+
+                        while (player_choice != "a" && player_choice != "b" && player_choice != "c")
+                        {
+                            Console.WriteLine("You have entered an invalid option");
+                            Console.WriteLine("You can either A: Attack, B: look closer at the enemy, C: Run");
+
+                            player_choice = Console.ReadLine().ToLower();
+                        }
+
+
+                        switch (player_choice)
+                        {
+                            case "a":
+
+                                Console.WriteLine("You attack " + skeleton_forest.enemy_name);
+                                skeleton_forest.enemy_health -= (player_weapon.damage - enemy_temp_defense);
+                                Console.WriteLine("You hit the " + skeleton_forest.enemy_name + " for " + (player_weapon.damage - enemy_temp_defense));
+
+                                break;
+
+                            case "b":
+
+                                Console.WriteLine("\n\nYou look closer at the " + skeleton_forest.enemy_name + " to see if you notice anythin");
+                                Console.WriteLine("You notice the skeleton has a sword but no armor.");
+                                Console.WriteLine("The skeleton is expressionless however it appears it doesn't have knowledge in sword fighting based on how it's holding its weapon");
+                                Console.WriteLine("You notice nothing else of note\n");
+                                break;
+
+                            case "c":
+
+                                Console.WriteLine("You attempt to run away from the skeleton");
+
+                                var run_away_chance = random.Next(1, 30);
+
+                                run_away_chance += player.player_stealth;
+
+                                if (run_away_chance >= 30)
+                                {
+                                    Console.WriteLine("You have sucessfully ran way from the skeleton, let's hope it doesn't find you again");
+                                    ran_away = true;
+                                    skeleton_forest.enemy_health = 0; //0 to break out of the loop
+                                }
+                                else
+                                {
+                                    Console.WriteLine("You attempt to escape but the skeleton was able to catch you, you have taken 1 damage");
+                                    player.player_health -= 1;
+
+                                    if (player.player_health <= 0)
+                                    {
+                                        lose_forest();
+                                    }
+                                }
+                                break;
+                        }
 
                     }
 
+                    if (!ran_away)
+                    {
+                        Console.WriteLine("Congrats! You have defeated the evil monkey, sure it seemed like a harmless animal but it got in your way and you had orders to kill anything that did that");
+                        int exp_gained = random.Next(7, 35);
+                        Console.WriteLine("You have gained ", exp_gained);
+
+                        player.exp += exp_gained;
+
+                        if (player.exp >= player.next_level_exp_target)
+                        {
+                            player.exp = 0;
+                            player.next_level_exp_target += 25;
+                            player.level = 0;
+                            Console.WriteLine("Congratulations you have leveled up!");
+                            Console.WriteLine("You have gained +1 defense +2 health");
+                            player.player_defense += 1;
+                            player.player_health += 2;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("You have spared the monster.. Hopefully this wasn't a mistake");
+                    }
                     break;
 
 
