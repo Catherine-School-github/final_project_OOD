@@ -55,7 +55,7 @@ namespace final_project
 
 
             #region fake questionaire
-         /*   
+            
 
             int user_input_fake_questions = 5;
             int multiple_choice_fake_questions = 8;
@@ -91,13 +91,13 @@ namespace final_project
 
             file_line_number = 0; //resets file_line_number for future files
             fake_questions.Close(); //close file because it's what you're supposed to do. 
-            */
+            
             #endregion fake questionaire
 
 
             #region shift to true game
             
-            /*
+            
             var shifting_game = new StreamReader("shift_true_game.txt");
 
             Console.WriteLine("\n\n");
@@ -108,14 +108,14 @@ namespace final_project
                 Thread.Sleep(2500);
                 Console.WriteLine(shifting_game.ReadLine());
             }
-            */
+            
             #endregion shift to true game
 
 
             #region setting up character
             string player_class_get;
 
-            /*
+            
             Thread.Sleep(5000);
             Console.Clear();
 
@@ -128,7 +128,7 @@ namespace final_project
             Console.WriteLine("Just gotta do one more thing");
             Thread.Sleep(2500);
             Console.WriteLine("Ah there we go. Now everything is ready\n\n");
-            */
+            
             Console.ForegroundColor = ConsoleColor.White;
             
 
@@ -144,7 +144,7 @@ namespace final_project
             player_class_get = Console.ReadLine().ToLower();
             while (player_class_get != "fighter" && player_class_get != "a" && player_class_get != "infiltrator" && player_class_get != "b" && player_class_get != "hero" && player_class_get != "c")
             {
-                Console.WriteLine("Choose a valid class, Fighter, Infiltrator, or Hero");
+                Console.WriteLine("Choose a valid class, A: Fighter, B: Infiltrator, or C: Hero");
                 player_class_get = Console.ReadLine().ToLower();
             }
 
@@ -222,7 +222,7 @@ namespace final_project
             #endregion setting initial items
 
             #region Intro
-            Console.WriteLine("\nWelcome, Adventurer {0}", player.player_name);
+            Console.WriteLine("\n\nWelcome, Adventurer {0}", player.player_name);
             Console.WriteLine("You are a {0}", player.player_class);
             Console.WriteLine(player.class_definition);
             Console.WriteLine("You come from the ancient city Aetheria. You have direct orders from the ruler to deliver a package across the land to Azurea's Domain");
@@ -244,11 +244,12 @@ namespace final_project
 
             Console.WriteLine("\n\nThe start of your new adventure begins... Goodluck {0}", player.player_name);
 
+            Thread.Sleep(5000);
             #endregion Intro
 
 
             #region shift_to_chapter_1
-            /*
+            
             Console.ForegroundColor = ConsoleColor.Green;
 
             var shifting_chatper_1 = new StreamReader("shift_to_chapter_1.txt");
@@ -265,7 +266,7 @@ namespace final_project
             Console.ForegroundColor = ConsoleColor.White;
 
             Thread.Sleep(4934);
-            */
+            
             #endregion shift_to_chapter1
 
             #region Chapter 1
@@ -314,7 +315,7 @@ namespace final_project
                     while (monkey.enemy_health > 0)
                     {
                         int enemy_choice, temp_damage, player_defence_chance, enemy_temp_defense;
-                        Console.WriteLine("The Monkey's current health is: " + monkey.enemy_health);
+                        Console.WriteLine("\n\nThe Monkey's current health is: " + monkey.enemy_health);
 
                         enemy_choice = random.Next(1, 4);
                         
@@ -427,7 +428,7 @@ namespace final_project
 
                     #endregion monkey_fight
 
-                    Console.WriteLine("While you contiue thorugh the forest you see something shining, a mysterious green potion in a glass bottle laying on the ground next to a skeleton");
+                    Console.WriteLine("\n\nWhile you contiue thorugh the forest you see something shining, a mysterious green potion in a glass bottle laying on the ground next to a skeleton");
                     Console.WriteLine("You get the strange feeling that this potion could help you on your adventure if you drank it, as you open the bottle however a stench of death hits you");
                     Console.WriteLine("Do you drink the potion " + player.player_name + " y/n");
                     var drink_forest_potion_one = Console.ReadLine().ToLower();
@@ -443,7 +444,7 @@ namespace final_project
                         Console.WriteLine("\n\nThe stench of death was to much to handle as you set down the drink not wanting to end up like the skeleton it was next to");
                     }
 
-                    Console.WriteLine("A few steps after you set the bottle down, you hear the sound of bones rattling behind you.");
+                    Console.WriteLine("\nA few steps after you set the bottle down, you hear the sound of bones rattling behind you.");
                     Console.WriteLine("You turn around and see the skeleton that was once on the ground now standing with a sword in it's hand. It starts to run at you");
 
 
@@ -612,7 +613,7 @@ namespace final_project
                     }
                     else if (sword_or_sheild == "a")
                     {
-                        Console.WriteLine("You quickly grab the sword before it sinks into the ground, the armour however disappears before your eyes into it");
+                        Console.WriteLine("\n\nYou quickly grab the sword before it sinks into the ground, the armour however disappears before your eyes into it");
                         Console.WriteLine("You inspect the sword and realize it's nothing out of the ordinary, just a simple iron sword. Despite this, it is still an upgrade to your current weapon");
                         Console.WriteLine("You toss aside your rusted sword into the sand and watch it sink while you get adjusted to your new weapon");
                         player_weapon.name = possible_melee_weapons[1];
@@ -625,7 +626,7 @@ namespace final_project
                     }
                     else
                     {
-                        Console.WriteLine("You quickly grab the armour before it sinks into the ground, the sword however disappears before your eyes into it");
+                        Console.WriteLine("\n\nYou quickly grab the armour before it sinks into the ground, the sword however disappears before your eyes into it");
                         Console.WriteLine("You inspect the new armor, and though it's nothing special, it is still better than your current equipment");
                         Console.WriteLine("You toss aside the armor you once wore as you put the new one one. You see your old set sink into the sand while you get adjusted to your new protection");
                         player_armor.name = possible_armor[2];
@@ -650,7 +651,7 @@ namespace final_project
                         // bool first_run = true;  
                         enemy_temp_defense = 0;
 
-                        Console.WriteLine("The Guardian's current health is: " + forest_boss.enemy_health);
+                        Console.WriteLine("\nThe Guardian's current health is: " + forest_boss.enemy_health);
 
                         enemy_choice = random.Next(1, 4);
                         
@@ -757,7 +758,7 @@ namespace final_project
 
                     if (!ran_away)
                     {
-                        Console.WriteLine("Congrats! You have defeated the Guardian, you have done the impossible");
+                        Console.WriteLine("\nCongrats! You have defeated the Guardian, you have done the impossible");
                         int exp_gained = 100;
                         Console.WriteLine("You have gained " + exp_gained + " experience points");
 
@@ -768,7 +769,7 @@ namespace final_project
                             player.exp = 0;
                             player.next_level_exp_target += 25;
                             player.level = 0;
-                            Console.WriteLine("Congratulations you have leveled up!");
+                            Console.WriteLine("\nCongratulations you have leveled up!");
                             Console.WriteLine("You have gained +1 defense +2 health");
                             player.player_defense += 1;
                             player.player_health += 2;
@@ -804,7 +805,7 @@ namespace final_project
                     }
                     else
                     {
-                        Console.WriteLine("You run away from the Guardian knowing that you will perish if you continue");
+                        Console.WriteLine("\n\nYou run away from the Guardian knowing that you will perish if you continue");
 
                         Console.WriteLine("You return to your home town, you have failed your mission. Word gets out about your shame and you are put on trail");
                         Console.WriteLine("You have been found guilty of treason and sentenced to death");
@@ -862,14 +863,15 @@ namespace final_project
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Let's try out this entire program out again");
-            Console.WriteLine("What is your favorite color " + player.player_name);
 
             Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("What is your favorite color " + player.player_name);
+
             player.color = Console.ReadLine().ToLower();
-            player.color = player.color.Replace(" ", ""); //removes spaces 
+            var player_color_switch = player.color.Replace(" ", ""); //removes spaces 
 
 
-            switch (player.color)
+            switch (player_color_switch)
             {
                 case "black":
                     Console.ForegroundColor = ConsoleColor.Black;
