@@ -24,6 +24,7 @@ namespace final_project
             string player_name;
             int file_line_number = 0;
 
+            #region equipment
             string[] possible_melee_weapons = { "rusted sword", "iron sword", "steal sword", "mace", "iron spear" };
             string[] possible_melee_weapons_description = { "A simple sword. It has seen many slain enemies and showing it's age", "A sturdy well balanced sword", "A powerful sword, enemies before you stand no chace", "A brutal crushing device, few can withstand it's power", "A pole with a iron tip on the end that excells at slaying those before it" };
 
@@ -37,6 +38,8 @@ namespace final_project
 
             string[] enemy_sword_types = { "Weak Sword", "Sword", "Strong Sword" };
             string[] enemy_range_types = { "Bow", "Crossbow", "Slingshot" };
+
+            #endregion equipment
 
             #region player_name get
             Console.Write("WELCOME! Please enter your name player: ");
@@ -840,11 +843,73 @@ namespace final_project
                     Console.WriteLine("\n\n\nYou start on the path ahead of you, as you make your way across the flat ground in front of you, a questions of what you are missing pops in your mind");
                     Console.WriteLine("Though you have to deliver the package as soon as possible, you can't seem to shake the feeling that you are missing..... something");
 
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                    var plains = new StreamReader("the_plains.txt");
+
+                    Console.WriteLine("\n\n");
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    while (!plains.EndOfStream)
+                    {
+                        Thread.Sleep(2500);
+                        Console.WriteLine(plains.ReadLine());
+                    }
+
+                    Thread.Sleep(2500);
+
                     break;
 
                 case "c":
+                    string give_up = "no".ToLower();
                     Console.WriteLine("\n\n\nThe idea of tresure fills your mind as you make your qay to the mountains");
                     Console.WriteLine("You start wondering if it'll be a sword, a hoarde of gold, or a one of a item item");
+
+
+                    var mountains = new StreamReader("mountain_pass.txt");
+                    var mountains_complete = new StreamReader("mountain_pass_complete.txt");
+                    var mountains_fail = new StreamReader("mountain_pass_fail.txt");
+                    Console.WriteLine("\n\n");
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    while (give_up == "no")
+                    {
+                        if (!mountains.EndOfStream)
+                        {
+                            Thread.Sleep(2500);
+                            Console.WriteLine(mountains.ReadLine());
+                            Console.WriteLine("Do you give up. Yes or no");
+                            give_up = Console.ReadLine().ToLower();
+                            while (give_up != "yes" && give_up != "no")
+                            {
+                                Console.WriteLine("Do you give up. Yes or no");
+                                give_up = Console.ReadLine().ToLower();
+                            }
+                        }
+                        else
+                        {
+                            give_up = "done"; //something other then no and yes to signal it's done but user didn't give up
+                            while (!mountains_complete.EndOfStream)
+                            {
+                                Thread.Sleep(2500);
+                                Console.WriteLine(mountains_complete.ReadLine());
+                            }
+
+                        }
+
+                        if (give_up == "yes")
+                        {
+                            while (!mountains_fail.EndOfStream)
+                            {
+                                Thread.Sleep(2500);
+                                Console.WriteLine(mountains_fail.ReadLine());
+                            }
+
+                        }
+
+                    }
+
+                    Thread.Sleep(2500);
 
                     break;
             }
@@ -859,6 +924,8 @@ namespace final_project
             Console.WriteLine(file_test.ReadToEnd());
             */
 
+
+            #region ending
             Thread.Sleep(1500);
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
@@ -876,70 +943,87 @@ namespace final_project
                 case "black":
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.BackgroundColor = ConsoleColor.White;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "blue":
                     Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "cyan":
                     Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "darkblue":
                     Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "darkcyan":
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "darkgrary":
                     Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "darkgreen":
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "darkmagenta":
                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "darkred":
                     Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "darkyellow":
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "gray":
                     Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "green":
                     Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "magenta":
                     Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "red":
                     Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "white":
                     Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 case "yellow":
                     Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
 
                 default:
                     Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("This color means you can be anything that you want");
                     break;
             
             }
@@ -948,8 +1032,9 @@ namespace final_project
             Console.WriteLine("You are the color " + player.color);
 
             // Console.ReadLine();
-            
+            #endregion ending
         }
+
 
         private static void lose_forest()
         {
